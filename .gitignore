@@ -4,3 +4,17 @@ __pycache__/
 .idea/
 .venv/
 cheaters.txt
+
+# Replays bruts
+*.replay
+
+# Environnements et secrets
+.venv/
+.venv-parser/
+.env
+.env.*
+__pycache__/
+*.pyc
+
+# Journaux
+install_log.txt
