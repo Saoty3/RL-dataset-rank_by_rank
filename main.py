@@ -142,7 +142,6 @@ def shared_pipeline(replays: Iterator[dict], cache_path: str, result_path: Optio
 def get_ranked_replays(bc_api: bc.Api, season: str, cache_dir: str):
     ranked_replays = bc_api.get_replays(
         playlist=bc.Playlist.RANKED,
-        min_rank=bc.Rank.GRAND_CHAMPION_1,  # Pros should never be below this, season reset would put them in GC
         sort_by=bc.ReplaySortBy.REPLAY_DATE,
         sort_dir=bc.SortDir.ASCENDING,
         count=REPLAYS_PER_SEASON,
@@ -237,7 +236,7 @@ def extract_player_ranks(replay):
 
 def collect_replays(bc_api: bc.Api, cache_dir: str, cheater_accounts: Optional[Set[str]] = None) -> Iterator[tuple[dict, float]]:
     # Free-to-play seasons to collect: f5 through f23
-    seasons = ["f21"]
+    seasons = ["f18","f19","f20","f21"]
     # Note on post-f21 seasons (f22, f23, ...):
     # EAC was implemented after Season 21, breaking BakkesMod rank reporting and auto-uploading.
     # Consequently, ranked replays from f22 onwards lack rank tags and cannot form a valid encounter graph.
@@ -355,7 +354,7 @@ def collect_replay_scores(bc_api: bc.Api, cache_dir: str, cheater_accounts: Opti
     return scores
 
 
-def select_replays(scores: dict, max_replays: int=4000) -> Iterator[str]:
+def select_replays(scores: dict, max_replays: int=1000) -> Iterator[str]:
     if not scores or not any(scores.values()):
         logging.warning("Aucun replay admissible trouvé dans les scores.")
         return
